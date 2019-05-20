@@ -1,5 +1,7 @@
 # Change Log
 
+ - 2019-05-20 08:33:36 -0700 [318b8c7](https://github.com/cloudflare/python-cloudflare/commit/318b8c750ea9d12a45b2ec3fecb9f16560264eb8) 2.3.0 release
+ - 2019-05-20 08:24:29 -0700 [cf084ee](https://github.com/cloudflare/python-cloudflare/commit/cf084ee22b454cbb50804c748ee969cab9c451a2) 2.2.0 release
  - 2019-05-20 08:23:52 -0700 [b024609](https://github.com/cloudflare/python-cloudflare/commit/b0246091fc0d367e7e36bb422ebe7e55a93bf6c0) 2.2.0 release
  - 2019-05-14 09:25:39 -0700 [630612a](https://github.com/cloudflare/python-cloudflare/commit/630612a52adad05fc9fc1ec05c52a9c08eacaa80) Add Python 3.7
  - 2019-04-12 13:53:41 +0100 [286cb0f](https://github.com/cloudflare/python-cloudflare/commit/286cb0f25e5bf13adacdf9ce7956bd514e508214) Merge pull request #64 from aaranmcguire/support-secondary-dns
