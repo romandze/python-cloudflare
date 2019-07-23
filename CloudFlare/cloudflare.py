@@ -116,7 +116,7 @@ class CloudFlare(object):
                               identifier1, identifier2, identifier3,
                               params, data, files)
         
-        def call_with_bearer_token(self, method, parts,
+        def call_with_bearer_auth(self, method, parts,
                                identifier1=None, identifier2=None, identifier3=None,
                                params=None, data=None, files=None):
             """ Cloudflare v4 API"""
