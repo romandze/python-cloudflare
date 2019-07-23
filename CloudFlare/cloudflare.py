@@ -796,35 +796,35 @@ class CloudFlare(object):
         def get(self, identifier1=None, identifier2=None, identifier3=None, params=None, data=None):
             """ Cloudflare v4 API"""
 
-            return self._base.call_with_bearer('GET', self._parts,
+            return self._base.call_with_bearer_auth('GET', self._parts,
                                                  identifier1, identifier2, identifier3,
                                                  params, data)
 
         def patch(self, identifier1=None, identifier2=None, identifier3=None, params=None, data=None):
             """ Cloudflare v4 API"""
 
-            return self._base.call_with_bearer('PATCH', self._parts,
+            return self._base.call_with_bearer_auth('PATCH', self._parts,
                                                  identifier1, identifier2, identifier3,
                                                  params, data)
 
         def post(self, identifier1=None, identifier2=None, identifier3=None, params=None, data=None, files=None):
             """ Cloudflare v4 API"""
 
-            return self._base.call_with_bearer('POST', self._parts,
+            return self._base.call_with_bearer_auth('POST', self._parts,
                                                  identifier1, identifier2, identifier3,
                                                  params, data, files)
 
         def put(self, identifier1=None, identifier2=None, identifier3=None, params=None, data=None):
             """ Cloudflare v4 API"""
 
-            return self._base.call_with_bearer('PUT', self._parts,
+            return self._base.call_with_bearer_auth('PUT', self._parts,
                                                  identifier1, identifier2, identifier3,
                                                  params, data)
 
         def delete(self, identifier1=None, identifier2=None, identifier3=None, params=None, data=None):
             """ Cloudflare v4 API"""
 
-            return self._base.call_with_bearer('DELETE', self._parts,
+            return self._base.call_with_bearer_auth('DELETE', self._parts,
                                                  identifier1, identifier2, identifier3,
                                                  params, data)
         
