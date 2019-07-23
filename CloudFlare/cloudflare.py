@@ -19,12 +19,13 @@ class CloudFlare(object):
     class _v4base(object):
         """ Cloudflare v4 API"""
 
-        def __init__(self, email, token, certtoken, base_url, debug, raw, use_sessions):
+        def __init__(self, email, token, certtoken, bearer, base_url, debug, raw, use_sessions):
             """ Cloudflare v4 API"""
 
             self.email = email
             self.token = token
             self.certtoken = certtoken
+            self.bearer = bearer
             self.base_url = base_url
             self.raw = raw
             self.use_sessions = use_sessions
@@ -109,6 +110,22 @@ class CloudFlare(object):
             headers = {
                 'User-Agent': self.user_agent,
                 'X-Auth-User-Service-Key': self.certtoken,
+                'Content-Type': 'application/json'
+            }
+            return self._call(method, headers, parts,
+                              identifier1, identifier2, identifier3,
+                              params, data, files)
+        
+        def call_with_bearer_token(self, method, parts,
+                               identifier1=None, identifier2=None, identifier3=None,
+                               params=None, data=None, files=None):
+            """ Cloudflare v4 API"""
+
+            if self.bearer is '' or self.bearer is None:
+                raise CloudFlareAPIError(0, 'no bearer token defined')
+            headers = {
+                'User-Agent': self.user_agent,
+                'Authorization': self.bearer,
                 'Content-Type': 'application/json'
             }
             return self._call(method, headers, parts,
@@ -755,6 +772,62 @@ class CloudFlare(object):
                                                  identifier1, identifier2, identifier3,
                                                  params, data)
 
+        
+    class _add_with_bearer_auth(object):
+        """ Cloudflare v4 API"""
+
+        def __init__(self, base, p1, p2=None, p3=None):
+            """ Cloudflare v4 API"""
+
+            self._base = base
+            self._parts = [p1, p2, p3]
+
+        def __call__(self, identifier1=None, identifier2=None, identifier3=None, params=None, data=None):
+            """ Cloudflare v4 API"""
+
+            # This is the same as a get()
+            return self.get(identifier1, identifier2, identifier3, params, data)
+
+        def __str__(self):
+            """ Cloudflare v4 API"""
+
+            return '[%s]' % ('/' + '/:id/'.join(filter(None, self._parts)))
+
+        def get(self, identifier1=None, identifier2=None, identifier3=None, params=None, data=None):
+            """ Cloudflare v4 API"""
+
+            return self._base.call_with_bearer('GET', self._parts,
+                                                 identifier1, identifier2, identifier3,
+                                                 params, data)
+
+        def patch(self, identifier1=None, identifier2=None, identifier3=None, params=None, data=None):
+            """ Cloudflare v4 API"""
+
+            return self._base.call_with_bearer('PATCH', self._parts,
+                                                 identifier1, identifier2, identifier3,
+                                                 params, data)
+
+        def post(self, identifier1=None, identifier2=None, identifier3=None, params=None, data=None, files=None):
+            """ Cloudflare v4 API"""
+
+            return self._base.call_with_bearer('POST', self._parts,
+                                                 identifier1, identifier2, identifier3,
+                                                 params, data, files)
+
+        def put(self, identifier1=None, identifier2=None, identifier3=None, params=None, data=None):
+            """ Cloudflare v4 API"""
+
+            return self._base.call_with_bearer('PUT', self._parts,
+                                                 identifier1, identifier2, identifier3,
+                                                 params, data)
+
+        def delete(self, identifier1=None, identifier2=None, identifier3=None, params=None, data=None):
+            """ Cloudflare v4 API"""
+
+            return self._base.call_with_bearer('DELETE', self._parts,
+                                                 identifier1, identifier2, identifier3,
+                                                 params, data)
+        
     def add(self, t, p1, p2=None, p3=None):
         """add api call to class"""
 
@@ -783,6 +856,8 @@ class CloudFlare(object):
             f = self._add_with_auth(self._base, p1, p2, p3)
         elif t == 'CERT':
             f = self._add_with_cert_auth(self._base, p1, p2, p3)
+        elif t == 'BEARER':
+            f = self._add_with_bearer_auth(self._base, p1, p2, p3)
         elif t == 'AUTH_UNWRAPPED':
             f = self._add_with_auth_unwrapped(self._base, p1, p2, p3)
         else:
@@ -820,7 +895,7 @@ class CloudFlare(object):
         base_url = BASE_URL
 
         # class creation values override configuration values
-        [conf_email, conf_token, conf_certtoken, extras] = read_configs()
+        [conf_email, conf_token, conf_certtoken, conf_bearer, extras] = read_configs()
 
         if email is None:
             email = conf_email
@@ -828,8 +903,10 @@ class CloudFlare(object):
             token = conf_token
         if certtoken is None:
             certtoken = conf_certtoken
+        if bearer is None:
+            bearer = conf_bearer
 
-        self._base = self._v4base(email, token, certtoken, base_url, debug, raw, use_sessions)
+        self._base = self._v4base(email, token, certtoken, bearer, base_url, debug, raw, use_sessions)
 
         # add the API calls
         api_v4(self)
