@@ -889,7 +889,7 @@ class CloudFlare(object):
                 w = w + self.api_list(a, s + '/' + n)
         return w
 
-    def __init__(self, email=None, token=None, certtoken=None, debug=False, raw=False, use_sessions=True):
+    def __init__(self, email=None, token=None, certtoken=None, bearer=None, debug=False, raw=False, use_sessions=True):
         """ Cloudflare v4 API"""
 
         base_url = BASE_URL
